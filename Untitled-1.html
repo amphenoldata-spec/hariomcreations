@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hari Om Creations | Advertising & Short Films</title>
+    <style>
+        /* Base Styles & Premium Gold/Black Theme */
+        :root {
+            --bg-dark: #050505;
+            --bg-card: #111111;
+            --gold-accent: #d4af37;
+            --text-light: #f4f4f4;
+            --text-muted: #aaaaaa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body.loading { overflow: hidden; }
+        body { color: var(--text-light); background-color: var(--bg-dark); }
+
+        /* --- SPLASH SCREEN & ANIMATIONS --- */
+        #splash-screen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            background-color: #000; z-index: 9999;
+            display: flex; justify-content: center; align-items: center;
+            transition: opacity 1s ease-in-out, visibility 1s ease-in-out;
+        }
+
+        /* Using your exact PNG image */
+        #splash-logo {
+            width: 300px;
+            max-width: 80%;
+            opacity: 0;
+            animation: fadeInScale 2s ease-out forwards;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        /* The golden CSS Loader */
+        #splash-loader {
+            display: none; 
+            opacity: 0;
+            width: 80px; height: 80px;
+            border: 3px solid rgba(212, 175, 55, 0.2);
+            border-top: 3px solid var(--gold-accent);
+            border-right: 3px solid var(--gold-accent);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            transition: opacity 0.5s ease-in-out;
+            position: absolute;
+        }
+
+        @keyframes fadeInScale {
+            0% { opacity: 0; transform: scale(0.9); filter: blur(4px); }
+            100% { opacity: 1; transform: scale(1); filter: blur(0); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* ---------------------------------- */
+
+        /* Navigation Menu */
+        header {
+            position: fixed; width: 100%; background: rgba(5, 5, 5, 0.95);
+            border-bottom: 1px solid rgba(212, 175, 55, 0.2); backdrop-filter: blur(5px);
+            z-index: 1000; display: flex; justify-content: space-between; align-items: center; padding: 15px 50px;
+        }
+
+        .logo-container { display: flex; align-items: center; }
+        .logo-container img { height: 50px; }
+        .logo-container span {
+            font-size: 1.5rem; font-weight: 400; letter-spacing: 2px;
+            color: var(--gold-accent); margin-left: 15px; text-transform: uppercase;
+        }
+
+        nav ul { display: flex; list-style: none; }
+        nav ul li { margin: 0 15px; }
+        nav ul li a {
+            text-decoration: none; color: var(--text-light); font-weight: 500;
+            letter-spacing: 1px; text-transform: uppercase; font-size: 0.9rem; transition: color 0.3s ease;
+        }
+        nav ul li a:hover { color: var(--gold-accent); }
+
+        /* Hero Section */
+        #home {
+            height: 100vh;
+            background: linear-gradient(rgba(5, 5, 5, 0.85), rgba(5, 5, 5, 0.95)), url('https://images.unsplash.com/photo-1536240478700-b869070f9279?auto=format&fit=crop&w=1920&q=80') center/cover;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 20px;
+        }
+
+        #home h1 { font-size: 4.5rem; margin-bottom: 20px; color: var(--text-light); letter-spacing: 3px; text-transform: uppercase; }
+        #home h1 span { color: var(--gold-accent); }
+        #home p { font-size: 1.2rem; color: var(--text-muted); letter-spacing: 2px; margin-bottom: 40px; text-transform: uppercase; }
+
+        .btn {
+            padding: 15px 40px; background: transparent; color: var(--gold-accent);
+            border: 2px solid var(--gold-accent); text-decoration: none;
+            border-radius: 4px; font-weight: bold; letter-spacing: 1px;
+            text-transform: uppercase; transition: all 0.3s ease;
+        }
+        .btn:hover { background-color: var(--gold-accent); color: var(--bg-dark); box-shadow: 0 0 15px rgba(212, 175, 55, 0.4); transform: translateY(-3px); }
+
+        /* General Sections */
+        section { padding: 100px 50px; }
+        .section-title {
+            text-align: center; font-size: 2.5rem; color: var(--gold-accent);
+            text-transform: uppercase; letter-spacing: 4px; margin-bottom: 50px; position: relative;
+        }
+        .section-title::after { content: ''; width: 60px; height: 2px; background: var(--text-light); display: block; margin: 15px auto 0; }
+
+        /* Grids */
+        #works, #contact { background-color: var(--bg-card); }
+        #gallery { background-color: var(--bg-dark); }
+        .works-grid, .gallery-grid { display: grid; gap: 40px; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        .work-card { background: var(--bg-dark); border: 1px solid rgba(255,255,255,0.05); border-radius: 4px; overflow: hidden; transition: 0.3s; }
+        .work-card:hover { transform: translateY(-10px); border-color: var(--gold-accent); }
+        .work-card img { width: 100%; height: 250px; object-fit: cover; filter: grayscale(40%); transition: 0.3s; }
+        .work-card:hover img { filter: grayscale(0%); }
+        .work-info { padding: 25px; }
+        .gallery-item img { width: 100%; height: 300px; object-fit: cover; transition: 0.6s; filter: brightness(70%); cursor: pointer;}
+        .gallery-item:hover img { transform: scale(1.08); filter: brightness(100%); }
+        
+        /* Contact Form */
+        .contact-container { max-width: 600px; margin: 0 auto; text-align: center; }
+        .contact-container input, .contact-container textarea { width: 100%; padding: 15px; margin-bottom: 20px; background: var(--bg-dark); border: 1px solid rgba(255,255,255,0.1); color: var(--text-light); }
+        .contact-container input:focus, .contact-container textarea:focus { outline: none; border-color: var(--gold-accent); }
+        footer { text-align: center; padding: 30px; background: var(--bg-dark); color: var(--text-muted); border-top: 1px solid rgba(255,255,255,0.05); }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; padding: 15px; background: rgba(5, 5, 5, 1); }
+            nav ul { flex-wrap: wrap; justify-content: center; margin-top: 15px;}
+            #home h1 { font-size: 2.5rem; }
+            section { padding: 60px 20px; }
+        }
+    </style>
+</head>
+<body class="loading">
+
+    <!-- Splash Screen -->
+    <div id="splash-screen">
+        <!-- Using your requested PNG format. Ensure this file exists in your folder. -->
+        <img id="splash-logo" src="images/Logo.jpeg" alt="Hari Om Creations">
+        <div id="splash-loader"></div>
+    </div>
+
+    <!-- Header & Navigation -->
+    <header>
+        <div class="logo-container">
+            <img src="images/Logo.jpeg" alt="Hari Om Creations Logo">
+            <span>Hari Om</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#works">Our Works</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main Content -->
+    <section id="home">
+        <h1>Hari Om <span>Creations</span></h1>
+        <p>Premium Advertisement Campaigns & Short Films</p>
+        <a href="#contact" class="btn">Start a Project</a>
+    </section>
+
+    <!-- (Works, Gallery, and Contact sections remain exactly the same as above) -->
+    <section id="works">
+        <h2 class="section-title">Our Works</h2>
+        <div class="works-grid">
+            <div class="work-card">
+                <img src="https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?auto=format&fit=crop&w=600&q=80" alt="Ad Campaign">
+                <div class="work-info">
+                    <h3>Brand Advertising</h3>
+                    <p>High-impact commercial campaigns designed to elevate brand identity and drive engagement.</p>
+                </div>
+            </div>
+            <div class="work-card">
+                <img src="https://images.unsplash.com/photo-1601506521937-0121a7fc2a6b?auto=format&fit=crop&w=600&q=80" alt="Short Film">
+                <div class="work-info">
+                    <h3>Short Film Production</h3>
+                    <p>Compelling storytelling through cinematic short films, capturing emotion and visual excellence.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery">
+        <h2 class="section-title">Gallery</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?auto=format&fit=crop&w=600&q=80" alt="BTS 1"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?auto=format&fit=crop&w=600&q=80" alt="BTS 2"></div>
+            <div class="gallery-item"><img src="https://images.unsplash.com/photo-1581344933932-d8cb845b4621?auto=format&fit=crop&w=600&q=80" alt="BTS 3"></div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <h2 class="section-title">Get In Touch</h2>
+        <div class="contact-container">
+            <form action="#" method="POST">
+                <input type="text" placeholder="Your Name" required>
+                <input type="email" placeholder="Your Email" required>
+                <textarea placeholder="Tell us about your project..." required style="height: 150px;"></textarea>
+                <button type="submit" class="btn" style="cursor:pointer; width: 100%;">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2026 Hari Om Creations. All rights reserved.</p>
+    </footer>
+
+    <!-- JavaScript to Handle the Image Animation Sequence -->
+    <script>
+        window.addEventListener('load', () => {
+            const splashScreen = document.getElementById('splash-screen');
+            const splashLogo = document.getElementById('splash-logo');
+            const splashLoader = document.getElementById('splash-loader');
+            const body = document.body;
+
+            // Wait 2 seconds for your image to finish fading in and holding
+            setTimeout(() => {
+                splashLogo.style.opacity = '0'; // Fade out your logo
+                
+                setTimeout(() => {
+                    // Hide the image, show the golden 'O' spinner
+                    splashLogo.style.display = 'none';
+                    splashLoader.style.display = 'block';
+                    
+                    // Trigger fade in for the spinner
+                    void splashLoader.offsetWidth; 
+                    splashLoader.style.opacity = '1';
+                    
+                }, 500); // Wait 0.5s for the image to fully disappear
+
+            }, 2000); 
+
+            // After spinning, reveal the website
+            setTimeout(() => {
+                splashScreen.style.opacity = '0';
+                splashScreen.style.visibility = 'hidden';
+                body.classList.remove('loading'); 
+            }, 4500); 
+        });
+    </script>
+</body>
+</html>
